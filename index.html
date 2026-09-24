@@ -3,11 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#8b5cf6">
+    <meta name="description" content="A gamified task scheduler with cultivation-themed progression system. Organize your day and progress through cultivation stages.">
     <title>Cultivation Schedule - Organize Your Path to Ascension</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%238b5cf6' width='192' height='192'/><text x='96' y='110' font-size='100' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>🌸</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%238b5cf6' width='180' height='180' rx='40'/><text x='90' y='105' font-size='90' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>🌸</text></svg>">
 </head>
 <body>
     <div id="root"></div>
     <script src="app.js"></script>
+    <script>
+        // Register service worker for PWA functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('✨ Service Worker registered successfully:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+
+        // Detect if app is installed/running as standalone
+        if (window.navigator.standalone === true) {
+            document.documentElement.style.setProperty('--standalone', 'true');
+        }
+
+        // Listen for install prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Show install button if you add one to your UI
+            console.log('✨ App can be installed!');
+        });
+    </script>
 </body>
 </html>
