@@ -1,125 +1,49 @@
-# 🌸 Cultivation Schedule App 🌸
+# Cultivation Schedule
 
-A gamified task scheduling and daily planner app with a cultivation/progression system. Organize your week, complete tasks, and progress through cultivation stages while earning Qi and unlocking titles!
+A weekly task planner with a cultivation-themed progression system. Plan each day's tasks, complete them to earn Qi, face tribulations, break through to higher cultivation stages and unlock titles.
 
-## Features
+## Layout
 
-### 📅 Weekly Schedule
-- Plan tasks for each day of the week (Monday-Sunday)
-- Add task titles, detailed notes, and custom Qi rewards
-- Mark tasks as complete to earn rewards
-- Delete tasks you no longer need
-- Clean, intuitive interface for viewing and managing daily tasks
+| Path | What it is |
+|---|---|
+| `www/` | The whole app: `index.html`, `styles.css`, `app.js`, plus the PWA `manifest.json` and `service-worker.js`. Every version of the app (browser, PWA, Android) runs this same code. |
+| `android/` | Capacitor Android project that wraps `www/` in a native shell. |
+| `keystore/debug.keystore` | Debug signing key so each new APK installs over the previous one. Password and alias are both `cultivation`. Debug only; never ship a store release with it. |
+| `.github/workflows/android.yml` | Builds the APK on every push and publishes it to the `android-latest` release. |
 
-### ⚡ Cultivation Progression System
-- **Qi System**: Earn Qi points by completing tasks
-- **Cultivation Stages**: Progress through 6 stages:
-  1. Mortal (Foundation)
-  2. Foundation Building (50 EXP)
-  3. Core Formation (150 EXP)
-  4. Tribulation Transcendence (300 EXP)
-  5. Immortal Ascension (500 EXP)
-  6. Heavenly Emperor (800 EXP)
+## Run in a browser
 
-### ⚔️ Tribulations & Breakthroughs
-- **Tribulations**: Triggered when you reach EXP thresholds (50, 150, 300, 500)
-  - 60% success rate when triggered
-  - Success: +20 bonus Qi
-  - Failure: Lose 10% of current Qi (keep pushing, cultivator!)
-- **Breakthroughs**: Automatically occur when advancing to new cultivation stages
-  - Gain +50 bonus Qi
-  - Unlock new titles
+```bash
+npm run serve        # serves www/ at http://localhost:8000
+```
 
-### 🏆 Achievement Titles
-Unlock special titles through accomplishments:
-- **Task Conqueror**: Complete 10 tasks
-- **Qi Warrior**: Earn 100 Qi
-- **Disciplined Cultivator**: Complete 25 tasks
-- **Path of Ascension**: Complete 50 tasks
-- **Unshakeable Will**: Complete 100 tasks
-- **Plus stage-specific titles** from breakthroughs!
+Chrome and Edge offer to install it as a PWA from the address bar; on a phone use "Add to Home Screen".
 
-### 📊 Status Tracking
-- Real-time Qi display
-- Current cultivation level and progress bar
-- Tasks completed counter
-- Title showcase
-- Event log showing recent achievements and tribulations
+## Install on Android
 
-## How to Use
+Every push to the development branch builds a fresh debug APK. On your phone:
 
-1. **Open** `index.html` in your web browser
-2. **Select a day** from the day selector to view or add tasks for that day
-3. **Add tasks** by clicking the "Add Task" button:
-   - Enter task title (required)
-   - Add optional notes
-   - Set Qi reward (default: 10)
-4. **Complete tasks** by clicking on the task or checkbox - you'll immediately gain Qi!
-5. **Watch for events** in the event log:
-   - Task completions
-   - Tribulation triggers
-   - Breakthroughs
-   - Title unlocks
-6. **Progress** through cultivation stages and aim for Heavenly Emperor!
+1. Open the repository's **Releases** page and pick **Cultivation Schedule (latest Android build)**.
+2. Download `cultivation-schedule.apk` and open it. Android asks once to allow installs from your browser.
+3. Later builds install over the existing app and keep your data.
 
-## Game Mechanics
+The build takes a few minutes; the **Actions** tab shows progress. Trigger one by hand from **Actions → Android APK → Run workflow**.
 
-### Earning Qi
-- Each task you create has a customizable Qi reward
-- Completing tasks instantly awards that Qi
-- Bonus Qi from:
-  - Passing tribulations: +20
-  - Breakthroughs: +50
+## Build the APK locally
 
-### Tribulations
-At certain EXP thresholds, tribulations are triggered:
-- When you reach 50, 150, 300, or 500 EXP
-- 60% success chance (40% failure chance)
-- Success = risk/reward mechanic to keep climbing
-- Failure encourages persistence
+Needs Node 22, JDK 21 and the Android SDK (or Android Studio).
 
-### Breakthroughs
-When you accumulate enough EXP to reach the next cultivation stage:
-- Automatically triggered with celebration
-- +50 bonus Qi awarded
-- New stage title unlocked
-- Visual notification in event log
+```bash
+npm ci
+npm run android:debug   # -> android/app/build/outputs/apk/debug/app-debug.apk
+```
 
-## Data Storage
+## Game mechanics
 
-All your progress is saved locally in your browser using `localStorage`. Your data persists even after closing the app!
+- **Qi**: each task carries a Qi reward (1-100). Completing it awards that much Qi and EXP.
+- **Stages**: Mortal → Foundation Building (50 EXP) → Core Formation (150) → Tribulation Transcendence (300) → Immortal Ascension (500) → Heavenly Emperor (800).
+- **Tribulations** fire once when EXP first reaches 50, 150, 300 and 500. 60% chance to pass for +20 Qi; failing costs 10% of your Qi.
+- **Breakthroughs** happen on reaching a new stage: +50 Qi and the stage's title.
+- **Titles** also unlock for task counts: Task Conqueror (10), Disciplined Cultivator (25), Path of Ascension (50), Unshakeable Will (100), and Qi Warrior at 100 Qi.
 
-To reset your progress, clear your browser's local storage for this page.
-
-## Customization
-
-You can customize:
-- **Task Qi rewards**: Set any value from 1-100 when creating tasks
-- **Task notes**: Add detailed descriptions or reminders
-- **Weekly organization**: Plan different tasks for each day
-
-## Mobile Responsive
-
-The app is fully responsive and works great on:
-- Desktop browsers
-- Tablets
-- Mobile phones
-
-## Tips for Cultivators
-
-✨ **Strategy Tips**:
-1. Create realistic tasks you can complete daily
-2. Set Qi rewards based on task difficulty
-3. Regular small completions beat sporadic large ones
-4. Watch for tribulation warnings as you approach milestones
-5. Aim for specific titles to stay motivated
-
-## Browser Compatibility
-
-Works on modern browsers with ES6 support and localStorage:
-- Chrome/Chromium
-- Firefox
-- Safari
-- Edge
-
-Enjoy your journey to becoming a Heavenly Emperor! 🌟
+Progress is stored on the device (browser local storage). Clear site data to reset.
