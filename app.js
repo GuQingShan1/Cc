@@ -22,7 +22,7 @@ const TITLE_THRESHOLDS = {
 class CultivationScheduleApp {
     constructor() {
         this.data = this.loadData();
-        this.currentDay = 0;
+        this.currentDay = (new Date().getDay() + 6) % 7;
         this.eventLog = [];
         this.init();
     }
