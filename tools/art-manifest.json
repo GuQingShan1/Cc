@@ -1,0 +1,39 @@
+{
+  "endpoints": {
+    "flare": "openai/gpt-image-2.5/flare/text-to-image",
+    "sunburst": "openai/gpt-image-2.5/sunburst/text-to-image"
+  },
+  "styleSuffix": "traditional Chinese ink wash painting (shuimo) on dark aged rice paper, misty mountains, restrained gold leaf and pale jade accents, muted low-key palette with deep brown-black shadows, soft paper grain, no text, no letters, no watermark, no border",
+  "assets": [
+    { "id": "bg-stage-0", "endpoint": "sunburst", "size": "1024x1536", "out": "bg/stage-0.webp", "format": "webp", "quality": 76, "width": 1024,
+      "prompt": "A mortal mountain village at dusk seen from below, thin smoke from a few roofs, a lone path climbing into fog, faint distant peaks, almost no light" },
+    { "id": "bg-stage-1", "endpoint": "sunburst", "size": "1024x1536", "out": "bg/stage-1.webp", "format": "webp", "quality": 76, "width": 1024,
+      "prompt": "A bamboo grove on a mountainside at dawn, pale mist between the stalks, a small meditation pavilion, the first hint of gold light at the horizon" },
+    { "id": "bg-stage-2", "endpoint": "sunburst", "size": "1024x1536", "out": "bg/stage-2.webp", "format": "webp", "quality": 76, "width": 1024,
+      "prompt": "Stone steps carved into a cliff rising through cloud, ancient pines clinging to rock, a distant gate at the top, jade-tinted mist" },
+    { "id": "bg-stage-3", "endpoint": "sunburst", "size": "1024x1536", "out": "bg/stage-3.webp", "format": "webp", "quality": 76, "width": 1024,
+      "prompt": "A hidden valley with a still black lake reflecting a single mountain, a glowing golden core of light hovering above the water, ink ripples" },
+    { "id": "bg-stage-4", "endpoint": "sunburst", "size": "1024x1536", "out": "bg/stage-4.webp", "format": "webp", "quality": 76, "width": 1024,
+      "prompt": "Towering peaks above a sea of clouds under a huge pale moon, cranes in flight, threads of gold qi drifting upward" },
+    { "id": "bg-stage-5", "endpoint": "sunburst", "size": "1024x1536", "out": "bg/stage-5.webp", "format": "webp", "quality": 76, "width": 1024,
+      "prompt": "Floating islands and waterfalls pouring into mist, a celestial palace roof barely visible, faint violet lightning in distant storm clouds" },
+    { "id": "bg-stage-6", "endpoint": "sunburst", "size": "1024x1536", "out": "bg/stage-6.webp", "format": "webp", "quality": 76, "width": 1024,
+      "prompt": "The summit of heaven: a vast immortal realm of mountains dissolving into gold-flecked emptiness, a colossal ink dragon coiled through the clouds" },
+    { "id": "sky-tribulation", "endpoint": "sunburst", "size": "1024x1536", "out": "bg/tribulation.webp", "format": "webp", "quality": 76, "width": 1024,
+      "prompt": "A furious storm sky in ink wash, layered thunderclouds lit from within by violet lightning, the heavens judging a tiny figure on a peak" },
+    { "id": "tex-seal", "endpoint": "flare", "size": "1024x1024", "out": "ui/seal-texture.png", "format": "png", "width": 512,
+      "prompt": "A worn red cinnabar seal-stamp impression texture, flat solid red square with irregular ink-bleed edges and small uninked gaps, on a pure white background, high contrast" },
+    { "id": "icon-realm-body", "endpoint": "flare", "size": "1024x1024", "out": "icons/realm-body.webp", "format": "webp", "quality": 82, "width": 256,
+      "prompt": "A single bold ink brush glyph of a human figure in a martial stance, one continuous stroke, gold ink on solid black background, centred" },
+    { "id": "icon-realm-mind", "endpoint": "flare", "size": "1024x1024", "out": "icons/realm-mind.webp", "format": "webp", "quality": 82, "width": 256,
+      "prompt": "A single bold ink brush glyph of an open scroll with a flame above it, minimal strokes, gold ink on solid black background, centred" },
+    { "id": "icon-realm-spirit", "endpoint": "flare", "size": "1024x1024", "out": "icons/realm-spirit.webp", "format": "webp", "quality": 82, "width": 256,
+      "prompt": "A single bold ink brush glyph of a lotus flower with a yin-yang centre, minimal strokes, gold ink on solid black background, centred" },
+    { "id": "icon-realm-mundane", "endpoint": "flare", "size": "1024x1024", "out": "icons/realm-mundane.webp", "format": "webp", "quality": 82, "width": 256,
+      "prompt": "A single bold ink brush glyph of a simple village house with a broom, minimal strokes, gold ink on solid black background, centred" },
+    { "id": "illus-empty", "endpoint": "flare", "size": "1536x1024", "out": "ui/empty.webp", "format": "webp", "quality": 78, "width": 800,
+      "prompt": "A lone cultivator seated in meditation on a flat rock, seen from behind, sparse brushwork, vast empty misty space around, small in frame" },
+    { "id": "icon-app", "endpoint": "flare", "size": "1024x1024", "out": "icons/app.png", "format": "png", "width": 1024,
+      "prompt": "App icon: a gold ink lotus sigil with a small glowing dantian core, centred with generous empty margin, on a flat very dark brown-black background, bold and readable at small sizes, no text" }
+  ]
+}

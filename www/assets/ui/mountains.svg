@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" preserveAspectRatio="xMidYMax slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a1714"/>
+      <stop offset="0.55" stop-color="#241f1a"/>
+      <stop offset="1" stop-color="#12100e"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e8c877" stop-opacity="0.55"/>
+      <stop offset="0.6" stop-color="#e8c877" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#e8c877" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#efe6d3" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#efe6d3" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#efe6d3" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="far" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="7"/></filter>
+    <filter id="mid" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="2.5"/></filter>
+    <filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.03" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+  <rect width="1080" height="1920" fill="url(#sky)"/>
+  <circle cx="760" cy="420" r="230" fill="url(#moon)"/>
+  <circle cx="760" cy="420" r="70" fill="#e8c877" fill-opacity="0.22"/>
+  <g filter="url(#far)" fill="#332d25" fill-opacity="0.75">
+    <path d="M-40 1180 C 80 1060 170 980 290 1010 C 380 1035 440 900 560 930 C 660 955 720 850 830 890 C 930 925 990 1040 1120 1060 L 1120 1920 L -40 1920 Z"/>
+  </g>
+  <rect x="0" y="1000" width="1080" height="360" fill="url(#mist)"/>
+  <g filter="url(#mid)" fill="#241f1a" fill-opacity="0.92">
+    <path filter="url(#rough)" d="M-40 1380 C 60 1290 130 1160 240 1200 C 320 1230 380 1120 470 1150 C 560 1180 610 1300 700 1260 C 780 1225 840 1110 930 1140 C 1010 1170 1060 1290 1120 1310 L 1120 1920 L -40 1920 Z"/>
+  </g>
+  <rect x="0" y="1250" width="1080" height="320" fill="url(#mist)"/>
+  <g fill="#17140f">
+    <path filter="url(#rough)" d="M-40 1560 C 90 1500 160 1400 270 1440 C 360 1472 400 1380 500 1400 C 600 1420 660 1520 760 1490 C 860 1460 920 1380 1010 1420 C 1070 1447 1100 1500 1120 1520 L 1120 1920 L -40 1920 Z"/>
+  </g>
+  <g stroke="#0a0908" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7">
+    <path d="M300 1470 l0 -70 m-18 24 l18 -14 l18 14 m-14 -32 l14 -10 l14 10"/>
+    <path d="M330 1462 l0 -54 m-14 20 l14 -10 l14 10"/>
+    <path d="M880 1440 l0 -78 m-20 28 l20 -16 l20 16 m-16 -34 l16 -12 l16 12"/>
+  </g>
+  <rect width="1080" height="1920" fill="url(#mist)" opacity="0.5"/>
+</svg>

@@ -1,0 +1,60 @@
+@font-face { font-family: "ZCOOL XiaoWei"; src: url("../assets/fonts/zcool-xiaowei-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cinzel"; src: url("../assets/fonts/cinzel-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cinzel"; src: url("../assets/fonts/cinzel-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Noto Sans"; src: url("../assets/fonts/noto-sans-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Noto Sans"; src: url("../assets/fonts/noto-sans-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Noto Sans"; src: url("../assets/fonts/noto-sans-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+:root {
+    color-scheme: dark;
+
+    --paper-deep: #12100e;
+    --paper: #1c1915;
+    --paper-raised: #26221c;
+    --paper-edge: #332d25;
+    --ink: #0a0908;
+    --rice: #efe6d3;
+    --rice-dim: #c9bfaa;
+    --mist: #8b8578;
+    --mist-faint: rgba(139, 133, 120, 0.28);
+    --jade: #4f9a7b;
+    --jade-light: #7fc4a4;
+    --gold: #c9a24b;
+    --gold-light: #e8c877;
+    --gold-faint: rgba(201, 162, 75, 0.22);
+    --cinnabar: #b83a2b;
+    --cinnabar-light: #d9573f;
+    --thunder: #a58cf0;
+
+    --font-display: "Cinzel", "ZCOOL XiaoWei", Georgia, "Times New Roman", serif;
+    --font-brush: "ZCOOL XiaoWei", "Cinzel", Georgia, serif;
+    --font-body: "Noto Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    --fs-hero: 34px;
+    --fs-h1: 26px;
+    --fs-h2: 20px;
+    --fs-body: 16px;
+    --fs-small: 13px;
+    --fs-micro: 11px;
+
+    --s1: 4px;
+    --s2: 8px;
+    --s3: 12px;
+    --s4: 16px;
+    --s5: 24px;
+    --s6: 32px;
+
+    --r-input: 4px;
+    --r-card: 10px;
+    --r-seal: 2px;
+
+    --topbar-h: 52px;
+    --nav-h: 64px;
+    --content-max: 720px;
+
+    --ease-out: cubic-bezier(0.2, 0.9, 0.3, 1);
+    --ease-stamp: cubic-bezier(0.2, 0.9, 0.3, 1.3);
+
+    --stage-hue: 0deg;
+    --stage-bright: 1;
+}

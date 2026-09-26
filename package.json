@@ -5,12 +5,20 @@
   "description": "Cultivation-themed weekly task planner",
   "scripts": {
     "serve": "python3 -m http.server 8000 --directory www",
+    "test": "node tests/game.test.mjs",
+    "fonts": "node tools/fetch-fonts.mjs",
+    "art": "node tools/generate-art.mjs",
+    "artifact": "node tools/build-artifact.mjs",
     "sync": "cap sync android",
     "android:debug": "cap sync android && cd android && ./gradlew assembleDebug"
   },
   "devDependencies": {
     "@capacitor/android": "^8.0.0",
     "@capacitor/cli": "^8.0.0",
-    "@capacitor/core": "^8.0.0"
+    "@capacitor/core": "^8.0.0",
+    "@fontsource/cinzel": "^5.3.0",
+    "@fontsource/noto-sans": "^5.3.0",
+    "@fontsource/zcool-xiaowei": "^5.3.0",
+    "sharp": "^0.35.4"
   }
 }
