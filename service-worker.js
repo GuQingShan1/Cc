@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cultivation-v1';
+const CACHE_NAME = 'cultivation-v2';
 const FILES_TO_CACHE = [
     '/',
     '/index.html',

@@ -137,6 +137,7 @@ class CultivationScheduleApp {
             this.checkTitles();
 
             this.saveData();
+            this.render();
         }
     }
 
@@ -147,8 +148,8 @@ class CultivationScheduleApp {
         for (let i = 0; i < TRIBULATION_THRESHOLDS.length; i++) {
             const threshold = TRIBULATION_THRESHOLDS[i];
             if (
-                this.data.exp === threshold &&
-                this.data.lastTribulation !== i
+                this.data.exp >= threshold &&
+                this.data.lastTribulation < i
             ) {
                 this.triggerTribulation(i + 1, threshold);
                 this.data.lastTribulation = i;
@@ -226,8 +227,8 @@ class CultivationScheduleApp {
     }
 
     init() {
-        this.render();
         this.addEvent('Welcome, cultivator. Begin your journey to ascension!', 'positive');
+        this.render();
     }
 
     render() {
