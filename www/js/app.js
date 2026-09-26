@@ -15,7 +15,9 @@
         constructor(data, store) {
             const G = CS.Game;
             this.store = store || CS.localStore;
-            this.data = G.migrate(data === undefined ? this.store.load() : data);
+            const raw = data === undefined ? this.store.load() : data;
+            this.migrated = !raw || raw.version !== 2;
+            this.data = G.migrate(raw);
             const today = G.todayKey();
             this.state = { view: 'today', date: today, month: today.slice(0, 7), justCompletedId: null, confirmDeleteId: null };
             this.init();
@@ -42,7 +44,7 @@
             document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') this.onVisible(); });
 
             const settled = this.runSettlement();
-            this.saveData();
+            if (settled || this.migrated) this.saveData();
             this.render();
             if (settled) this.showSettlement();
             else if (this.data.lastSettlementReport && !this.data.lastSettlementReport.seen) this.showSettlement();
