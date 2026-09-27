@@ -2,7 +2,7 @@ name: Android APK
 
 on:
   push:
-    branches: ["claude/cultivation-schedule-app-k145kf", "main"]
+    branches: ["claude/cultivation-schedule-app-k145kf", "claude/awesome-babbage-sj2m5t", "main"]
     paths-ignore: ["README.md"]
   workflow_dispatch:
 

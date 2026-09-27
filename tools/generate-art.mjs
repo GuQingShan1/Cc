@@ -29,14 +29,21 @@ if (!key && !dryRun) {
 const headers = { Authorization: `Key ${key}`, 'Content-Type': 'application/json' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// fal's gpt-image-2.5 endpoints take image_size as a preset name (square_hd, portrait_4_3, ...) or an
+// explicit { width, height } object; a "WxH" string is rejected. Both dimensions must be multiples of 16.
+function imageSize(size) {
+    const m = /^(\d+)x(\d+)$/.exec(String(size));
+    return m ? { width: Number(m[1]), height: Number(m[2]) } : size;
+}
+
 function requestFor(asset) {
     const endpoint = manifest.endpoints[asset.endpoint] || manifest.endpoints.flare;
-    // Field names follow fal's shared gpt-image surface; confirm against the endpoint's API page if a request is rejected.
+    // Field names checked against https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=<endpoint>
     return {
         url: `https://queue.fal.run/${endpoint}`,
         body: {
             prompt: `${asset.prompt}. ${manifest.styleSuffix}`,
-            image_size: asset.size,
+            image_size: imageSize(asset.size),
             num_images: 1,
             output_format: 'png',
             quality,
