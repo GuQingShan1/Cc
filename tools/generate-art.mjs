@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Generates the app's art from tools/art-manifest.json via fal.ai and writes optimised files into www/assets.
-// Usage: FAL_KEY=... node tools/generate-art.mjs [--dry-run] [--force] [--only id,id] [--android] [--quality low|medium|high]
+// Generates the app's art from tools/art-manifest.json via the OpenAI Images API and writes optimised files into www/assets.
+// Usage: OPENAI_API_KEY=... node tools/generate-art.mjs [--dry-run] [--force] [--only id,id] [--android] [--quality low|medium|high]
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -14,39 +14,33 @@ const android = flag('--android');
 const only = opt('--only', '').split(',').filter(Boolean);
 const quality = opt('--quality', 'high');
 const BUDGET = 6 * 1024 * 1024;
+const API_URL = 'https://api.openai.com/v1/images/generations';
 
 const manifest = JSON.parse(fs.readFileSync(path.join(root, 'tools/art-manifest.json'), 'utf8'));
 const assetsDir = path.join(root, 'www/assets');
 const rawDir = path.join(root, 'art/raw');
 fs.mkdirSync(rawDir, { recursive: true });
 
-const key = process.env.FAL_KEY;
+const key = process.env.OPENAI_API_KEY;
 if (!key && !dryRun) {
-    console.error('FAL_KEY is not set. Run with --dry-run to preview requests, or export FAL_KEY.');
+    console.error('OPENAI_API_KEY is not set. Run with --dry-run to preview requests, or export OPENAI_API_KEY.');
     process.exit(2);
 }
 
-const headers = { Authorization: `Key ${key}`, 'Content-Type': 'application/json' };
+const headers = { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' };
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-// fal's gpt-image-2.5 endpoints take image_size as a preset name (square_hd, portrait_4_3, ...) or an
-// explicit { width, height } object; a "WxH" string is rejected. Both dimensions must be multiples of 16.
-function imageSize(size) {
-    const m = /^(\d+)x(\d+)$/.exec(String(size));
-    return m ? { width: Number(m[1]), height: Number(m[2]) } : size;
-}
-
 function requestFor(asset) {
-    const endpoint = manifest.endpoints[asset.endpoint] || manifest.endpoints.flare;
-    // Field names checked against https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=<endpoint>
+    const model = manifest.endpoints[asset.endpoint] || manifest.endpoints.flare;
     return {
-        url: `https://queue.fal.run/${endpoint}`,
+        url: API_URL,
         body: {
+            model,
             prompt: `${asset.prompt}. ${manifest.styleSuffix}`,
-            image_size: imageSize(asset.size),
-            num_images: 1,
-            output_format: 'png',
+            size: asset.size,
             quality,
+            output_format: 'png',
+            n: 1,
         },
     };
 }
@@ -56,30 +50,20 @@ async function submit(asset) {
     for (let attempt = 1; attempt <= 3; attempt++) {
         try {
             const res = await fetch(url, { method: 'POST', headers, body: JSON.stringify(body) });
-            if (!res.ok) throw new Error(`submit ${res.status}: ${await res.text()}`);
-            const job = await res.json();
-            const deadline = Date.now() + 180000;
-            while (Date.now() < deadline) {
-                await sleep(2000);
-                const st = await fetch(job.status_url, { headers });
-                if (!st.ok) throw new Error(`status ${st.status}`);
-                const status = await st.json();
-                if (status.status === 'COMPLETED') {
-                    const out = await fetch(job.response_url, { headers });
-                    if (!out.ok) throw new Error(`result ${out.status}`);
-                    const result = await out.json();
-                    const image = result.images && result.images[0];
-                    if (!image || !image.url) throw new Error('no image in result');
-                    const bin = await fetch(image.url);
-                    if (!bin.ok) throw new Error(`download ${bin.status}`);
-                    return Buffer.from(await bin.arrayBuffer());
-                }
-                if (status.status === 'FAILED' || status.status === 'ERROR') throw new Error(`job failed: ${JSON.stringify(status)}`);
+            if (!res.ok) {
+                const text = await res.text();
+                const fatal = res.status === 400 || res.status === 401 || res.status === 403 || text.includes('insufficient_quota');
+                const error = new Error(`generate ${res.status}: ${text}`);
+                if (fatal) { error.fatal = true; }
+                throw error;
             }
-            throw new Error('timed out waiting for the job');
+            const result = await res.json();
+            const image = result.data && result.data[0];
+            if (!image || !image.b64_json) throw new Error('no b64_json in response');
+            return Buffer.from(image.b64_json, 'base64');
         } catch (error) {
             console.warn(`  attempt ${attempt} failed: ${error.message}`);
-            if (attempt === 3) throw error;
+            if (error.fatal || attempt === 3) throw error;
             await sleep(3000 * attempt);
         }
     }
@@ -145,7 +129,7 @@ async function main() {
             console.log(`${asset.id}: POST ${req.url}\n  ${JSON.stringify(req.body)}`);
             return;
         }
-        console.log(`generate ${asset.id} via ${asset.endpoint}`);
+        console.log(`generate ${asset.id} via ${req.body.model}`);
         const rawPath = path.join(rawDir, `${asset.id}.png`);
         if (!fs.existsSync(rawPath) || force) fs.writeFileSync(rawPath, await submit(asset));
         results[asset.id] = await optimise(asset, rawPath);

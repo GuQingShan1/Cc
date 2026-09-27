@@ -1,7 +1,7 @@
 {
   "endpoints": {
-    "flare": "openai/gpt-image-2.5/flare/text-to-image",
-    "sunburst": "openai/gpt-image-2.5/sunburst/text-to-image"
+    "flare": "gpt-image-2.5-flare",
+    "sunburst": "gpt-image-2.5-sunburst"
   },
   "styleSuffix": "traditional Chinese ink wash painting (shuimo) on dark aged rice paper, misty mountains, restrained gold leaf and pale jade accents, muted low-key palette with deep brown-black shadows, soft paper grain, no text, no letters, no watermark, no border",
   "assets": [

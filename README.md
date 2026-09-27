@@ -56,8 +56,8 @@ Every push builds `cultivation-schedule.apk` and attaches it to the **android-la
 
 The visuals ship with hand-made SVG stand-ins. To replace them with generated ink-wash art:
 
-1. Allow `fal.run`, `queue.fal.run`, `fal.ai` and `*.fal.media` (finished images are served from `v3b.fal.media`) in the environment's network policy and set `FAL_KEY`.
+1. Allow `api.openai.com` in the environment's network policy and set `OPENAI_API_KEY`.
 2. `npm run art -- --dry-run` prints every request; `npm run art` generates whatever is missing (about 15 images, `--only id,id` to pick, `--force` to redo, `--quality medium` to spend less).
 3. Add `--android` to also write the adaptive launcher icon from `icon-app`.
 
-The script writes optimised WebP/PNG files into `www/assets/`, updates `www/assets/manifest.json`, and fails if the total passes 6 MB. The app picks up whatever the manifest lists and keeps the stand-ins for anything missing. Prompts live in `tools/art-manifest.json`. Sizes are written as `WxH` and sent to fal as `{ width, height }`; the field names match the endpoint's OpenAPI schema at `https://fal.ai/api/openapi/queue/openapi.json?endpoint_id=<endpoint>`.
+The script writes optimised WebP/PNG files into `www/assets/`, updates `www/assets/manifest.json`, and fails if the total passes 6 MB. The app picks up whatever the manifest lists and keeps the stand-ins for anything missing. Prompts live in `tools/art-manifest.json`; its `endpoints` map the `flare` and `sunburst` names to OpenAI image models (`gpt-image-2.5-flare` and `gpt-image-2.5-sunburst`). Each asset is one POST to `https://api.openai.com/v1/images/generations` with `model`, `prompt`, `size` (`WxH`), `quality`, `output_format` and `n`; the image comes back base64-encoded in `data[0].b64_json` and the raw PNG is cached in `art/raw/`.
